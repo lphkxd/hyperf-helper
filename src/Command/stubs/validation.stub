@@ -1,0 +1,74 @@
+<?php
+declare(strict_types=1);
+namespace App\Validate;
+
+use Mzh\Validate\Validate\Validate;
+//默认模板
+class %CLASS%Validation extends Validate
+{
+
+    /**
+     * 验证规则
+     * @var array
+     */
+    protected $rule = [
+        'id' => 'integer|gt:0',
+        'title' => 'require|max:200',
+        'content' => 'require',
+        'source' => 'max:60|requireWith:source_url',
+        'source_url' => 'max:255|requireWith:source',
+        'status' => 'in:0,1',
+        'page' => 'integer|gt:0',
+        'limit' => 'integer|gt:0',
+        'order_type' => 'in:asc,desc',
+        'order_field' => 'in:id,status,create_time,update_time',
+    ];
+
+    /**
+     * 字段描述
+     * @var array
+     */
+    protected $field = [
+        'id' => '编号',
+        'title' => '标题',
+        'content' => '内容',
+        'source' => '来源',
+        'source_url' => '地址',
+        'status' => '文章状态',
+        'page' => '页码',
+        'limit' => '每页数量',
+        'order_type' => '排序方式',
+        'order_field' => '排序字段',
+    ];
+
+    /**
+     * 场景规则
+     * @var array
+     */
+    protected $scene = [
+        'update' => [
+            'id' => 'require|integer|gt:0',
+            'title',
+            'status',
+        ],
+        'delete' => [
+            'id' => 'require|arrayHasOnlyInts',
+        ],
+        'detail' => [
+            'id' => 'require|integer|gt:0',
+        ],
+        'list' => [
+            'title' => 'max:200',
+            'status',
+            'page',
+            'limit',
+            'order_type',
+            'order_field',
+        ],
+        'status' => [
+            'id' => 'require|arrayHasOnlyInts',
+            'status' => 'require|in:0,1',
+        ],
+    ];
+
+}

@@ -1,0 +1,29 @@
+<?php
+declare(strict_types=1);
+
+namespace %NAMESPACE%;
+
+use Mzh\Helper\Controller\AbstractBaseController;
+use Mzh\Swagger\Annotation\ApiController;
+use Hyperf\Di\Annotation\Inject;
+use Mzh\Swagger\Annotation\PostApi;
+
+/**
+ * @ApiController(tag="%TITLE%", description="%DESC%")
+ */
+class %CLASS% extends AbstractBaseController
+{
+    /**
+     * @Inject()
+     * @var %SERVICE%
+     */
+    private $%SERVICENAME%;
+
+    /**
+     * @PostApi(summary="默认index方法",security=true)
+     */
+    public function index()
+    {
+        return $this->json("成功",200);
+    }
+}

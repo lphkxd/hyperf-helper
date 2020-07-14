@@ -1,0 +1,53 @@
+<?php
+declare(strict_types=1);
+namespace App\Service;
+use App\Exception\ApiException;
+use App\Model\%CLASS% as %CLASS%Model;
+use Mzh\Helper\DbHelper\GetQueryHelper;
+
+class %CLASS%Service
+{
+    use GetQueryHelper;
+
+    public function create(array $data)
+    {
+       return %CLASS%Model::query()->create($data);
+    }
+
+    public function update(array $data)
+    {
+
+    }
+
+    public function delete(int $id)
+    {
+        if ($id == 0) {
+            throw new ApiException('不能为空');
+        }
+        $detail = %CLASS%Model::query()->where('id', $id)->where('status', 1)->first();
+        if (empty($detail)) {
+            throw new ApiException('不存在');
+        }
+        return $detail->delete();
+    }
+
+    public function detail(int $id)
+    {
+        if ($id == 0) {
+            throw new ApiException('不能为空');
+        }
+        $detail = %CLASS%Model::query()->where('id', $id)->where('status', 1)->first();
+        if (empty($detail)) {
+            throw new ApiException('不存在');
+        }
+        return $detail->toArray();
+    }
+
+    public function list(array $data)
+    {
+        $model = %CLASS%Model::query();
+        $query = $this->QueryHelper($model, $data);
+        $query->equal('status');
+        return $query->paginate();
+    }
+}

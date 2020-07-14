@@ -1,0 +1,39 @@
+{
+  "name": "mzh/hyperf-helper",
+  "description": "A helper component for hyperf.",
+  "license": "MIT",
+  "keywords": [
+    "php",
+    "hyperf",
+    "helper"
+  ],
+  "support": {
+  },
+  "require": {
+    "php": ">=7.2",
+    "hyperf/utils": "~2.0.0",
+    "hyperf/command": "^2.0",
+    "hyperf/contract": "~2.0.0",
+    "hyperf/di": "~2.0.0",
+    "hyperf/devtool": "^2.0"
+  },
+  "autoload": {
+    "psr-4": {
+      "Mzh\\Helper\\": "src/"
+    },
+    "files": [
+      "src/Helper/helper.php"
+    ]
+  },
+  "extra": {
+    "hyperf": {
+      "config": "Mzh\\Helper\\ConfigProvider"
+    }
+  },
+  "bin": [
+  ],
+  "scripts": {
+    "cs-fix": "php-cs-fixer fix $1",
+    "test": "phpunit --colors=always"
+  }
+}
