@@ -155,3 +155,80 @@ if (!function_exists('convertHump')) {
         return $result;
     }
 }
+
+if (!function_exists('session')) {
+    /**
+     * Session管理
+     * @param string $name session名称
+     * @param mixed $value session值
+     * @param bool $sessionId
+     * @return mixed
+     */
+    function session($name = '', $value = '', $sessionId = '')
+    {
+        if ($sessionId != '') {
+            $session = new Session(ApplicationContext::getContainer()->get(config('session.handler')), (string)$sessionId);
+            $session->set($name, $value);
+            Context::set(SessionInterface::class, $session);
+            return true;
+        }
+
+        /** @var SessionInterface $session */
+        $session = Context::get(SessionInterface::class);
+        if (empty($session)) {
+            return null;
+        }
+        if (is_null($name)) {
+            // 清除
+            $session->clear();
+        } elseif ('' === $name) {
+            return $session->all();
+        } elseif (is_null($value)) {
+            // 删除
+            $session->remove($name);
+        } elseif ('' === $value) {
+            // 判断或获取
+            return 0 === strpos($name, '?') ? $session->has(substr($name, 1)) : $session->get($name);
+        } else {
+            // 设置
+            $session->set($name, $value);
+        }
+    }
+}
+
+if (!function_exists('getSession')) {
+    /**
+     * Session管理
+     * @return mixed
+     */
+    function getSession(): ?SessionInterface
+    {
+        /** @var SessionInterface $session */
+        $session = Context::get(SessionInterface::class);
+        if (empty($session)) {
+            return null;
+        }
+        return $session;
+    }
+}
+
+if (!function_exists('sessionDestroy')) {
+    /**
+     * Session管理
+     * @param string $name session名称
+     * @param mixed $value session值
+     * @param bool $sessionId
+     * @return mixed
+     */
+    function sessionDestroy($sessionId = '')
+    {
+        if ($sessionId != '') {
+            $session = new Session(ApplicationContext::getContainer()->get(config('session.handler')), (string)$sessionId);
+            $session->clear();
+            return true;
+        }
+        /** @var SessionInterface $session */
+        $session = Context::get(SessionInterface::class);
+        $session->clear();
+    }
+}
