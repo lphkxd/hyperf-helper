@@ -116,3 +116,42 @@ if (!function_exists('filterEmoji')) {
 
 }
 
+if (!function_exists('convertUnderline')) {
+
+
+    function convertUnderline($str)
+    {
+        $str = preg_replace_callback('/([-_]+([a-z]{1}))/i', function ($matches) {
+            return strtoupper($matches[2]);
+        }, $str);
+        return $str;
+    }
+}
+if (!function_exists('humpToLine')) {
+
+    /*
+        * 驼峰转下划线
+        */
+    function humpToLine($str)
+    {
+        $str = preg_replace_callback('/([A-Z]{1})/', function ($matches) {
+            return '_' . strtolower($matches[0]);
+        }, $str);
+        return $str;
+    }
+}
+if (!function_exists('convertHump')) {
+
+    function convertHump(array $data)
+    {
+        $result = [];
+        foreach ($data as $key => $item) {
+            if (is_array($item) || is_object($item)) {
+                $result[humpToLine($key)] = convertHump((array)$item);
+            } else {
+                $result[humpToLine($key)] = $item;
+            }
+        }
+        return $result;
+    }
+}
