@@ -22,7 +22,7 @@
       "Mzh\\Helper\\": "src/"
     },
     "files": [
-      "src/Helper/helper.php"
+      "./src/Helper/helper.php"
     ]
   },
   "extra": {
