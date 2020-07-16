@@ -1,5 +1,10 @@
 # hyperf-helper
 hyperf-helper 工具助手，自动生成service、api控制器、验证器
+安装方法
+```shell script
+composer require mzh/hyperf-helper
+```
+
 #常用方法
 ````
 Redis()          #获取redis实例
@@ -59,10 +64,10 @@ use GetQueryHelper;
 #工具2 自动生成工具依赖
 ## gen:api
 自动生成api文件，自动把swagger注解，和常用代码给生成出来
-##### 参数1：类名
-##### 参数2：当前模块名字（swagger上展示用）
-##### 参数3：绑定哪个服务（不写为当前类名+Service)
-##### 参数4：当前模块介绍（swagger上展示用）
+#### 参数1：类名
+#### 参数2：当前模块名字（swagger上展示用）
+#### 参数3：绑定哪个服务（不写为当前类名+Service)
+#### 参数4：当前模块介绍（swagger上展示用）
 例如生成api User控制器(支持多级目录)：
 ```shell script
 php bin/hyperf.php gen:api User 用户控制器 UserService 介绍
