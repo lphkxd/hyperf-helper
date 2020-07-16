@@ -226,7 +226,7 @@ class QueryHelper
         if ($list->isEmpty()) {
             return [
                 'items' => [],
-                'page_no' => 0,
+                'page' => 0,
                 'has_more' => false,
                 'total_result' => 0,
             ];
@@ -236,7 +236,7 @@ class QueryHelper
         }
         return [
             'items' => $list->toArray(),
-            'page_no' => $page ?? 0,
+            'page' => $page ?? 0,
             'has_more' => $list->count() == ($limit ?? 20),
             'total_result' => $new->count(),
         ];
