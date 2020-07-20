@@ -38,25 +38,9 @@ abstract class AbstractBaseController
     protected $response;
 
 
-    public function json($data = [], $code = 200, $msg = 'success', $thr = null)
+    public function json($data = [], $msg = 'success')
     {
-        $res = [];
-        if ($thr != null) {
-            $res = $thr;
-        }
-        $res['status'] = $code;
-        $res['message'] = $msg;
-        $res['data'] = $data;
-
-        return $this->response->json($res);
-    }
-
-    public function error($msg, $code = 500)
-    {
-        $data['status'] = $code;
-        $data['message'] = empty($msg) ? '错误' : $msg;
-        $data['data'] = [];
+        $data['_message'] = $msg;
         return $this->response->json($data);
     }
-
 }
