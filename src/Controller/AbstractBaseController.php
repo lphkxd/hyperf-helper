@@ -12,7 +12,6 @@ declare(strict_types=1);
 
 namespace Mzh\Helper\Controller;
 
-use Hyperf\Contract\SessionInterface;
 use Hyperf\Di\Annotation\Inject;
 use Hyperf\HttpServer\Contract\RequestInterface;
 use Hyperf\HttpServer\Contract\ResponseInterface;
@@ -39,14 +38,14 @@ abstract class AbstractBaseController
     protected $response;
 
 
-    public function json($data = [], $msg = 'success')
+    public function json($data = [], $msg = '')
     {
         $res = [];
         if (is_string($data)) {
-            $res['_message'] = $msg;
+            $res['_message'] = $data;
         } else {
             $res = $data;
-            $res['_message'] = $msg;
+            if (!empty($msg)) $res['_message'] = $msg;
         }
         return $this->response->json($res);
     }
