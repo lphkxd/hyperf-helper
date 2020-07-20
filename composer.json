@@ -15,7 +15,8 @@
     "hyperf/command": "^2.0",
     "hyperf/contract": "~2.0.0",
     "hyperf/di": "~2.0.0",
-    "hyperf/devtool": "^2.0"
+    "hyperf/devtool": "^2.0",
+    "hyperf/session": "^2.0"
   },
   "autoload": {
     "psr-4": {

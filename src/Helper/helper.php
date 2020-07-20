@@ -6,7 +6,10 @@ use Hyperf\Contract\StdoutLoggerInterface;
 use Hyperf\Redis\RedisFactory;
 use Hyperf\Utils\ApplicationContext;
 use Hyperf\Utils\Context;
+use Mzh\Helper\Session\Session;
 use Psr\Http\Message\ServerRequestInterface;
+use Hyperf\Contract\SessionInterface;
+use Hyperf\Session\FlashTrait;
 
 
 if (!function_exists('redis')) {
