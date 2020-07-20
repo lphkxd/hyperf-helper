@@ -9,6 +9,7 @@ declare(strict_types=1);
  * @contact  group@hyperf.io
  * @license  https://github.com/hyperf-cloud/hyperf/blob/master/LICENSE
  */
+
 namespace Mzh\Helper\Controller;
 
 use Hyperf\Contract\SessionInterface;
@@ -40,7 +41,13 @@ abstract class AbstractBaseController
 
     public function json($data = [], $msg = 'success')
     {
-        $data['_message'] = $msg;
-        return $this->response->json($data);
+        $res = [];
+        if (is_string($data)) {
+            $res['_message'] = $msg;
+        } else {
+            $res = $data;
+            $res['_message'] = $msg;
+        }
+        return $this->response->json($res);
     }
 }
