@@ -227,8 +227,9 @@ class QueryHelper
             return [
                 'items' => [],
                 'page' => 0,
+                'page_size' => ($limit ?? 20),
                 'has_more' => false,
-                'total_result' => 0,
+                'total' => 0,
             ];
         }
         if (is_callable($callback)) {
@@ -237,8 +238,9 @@ class QueryHelper
         return [
             'items' => $list->toArray(),
             'page' => $page ?? 0,
+            'page_size' => ($limit ?? 20),
             'has_more' => $list->count() == ($limit ?? 20),
-            'total_result' => $new->count(),
+            'total' => $new->count(),
         ];
     }
 }
