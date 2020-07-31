@@ -213,7 +213,7 @@ class QueryHelper
      */
     public function paginate($columns = ['*'], $callback = null)
     {
-        $limit = (isset($this->data['page']) && $this->data['limit'] > 0) ? $this->data['limit'] : 20;
+        $limit = (isset($this->data['limit']) && $this->data['limit'] > 0) ? $this->data['limit'] : 20;
         $page = (isset($this->data['page'])) ? $this->data['page'] : 1;
         $offset = ($page - 1) * $limit;
         $new = clone $this->query;
