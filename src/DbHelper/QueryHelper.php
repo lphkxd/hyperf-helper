@@ -58,8 +58,7 @@ class QueryHelper
 
     /**
      * 追加数据
-     * @param $key
-     * @param null $value
+     * @param array $data
      * @return $this
      */
     public function addData($key, $value = null)
@@ -100,9 +99,21 @@ class QueryHelper
                 list($dk, $qk) = explode($alias, $field);
             }
             if (isset($data[$qk]) && $data[$qk] !== '') {
-                $this->query->where($dk, 'like', "%{$data[$qk]}%");
+                $this->query = $this->query->where($dk, 'like', "%{$data[$qk]}%");
             }
         }
+        return $this;
+    }
+
+    /**
+     * 设置手动设置查询条件
+     * @param string|array $fields 查询字段
+     * @param string $alias 别名分割符
+     * @return $this
+     */
+    public function where($fields, $val)
+    {
+        $this->query = $this->query->where($fields, $val);
         return $this;
     }
 
@@ -121,7 +132,7 @@ class QueryHelper
                 list($dk, $qk) = explode($alias, $field);
             }
             if (isset($data[$qk]) && $data[$qk] !== '') {
-                $this->query->where($dk, "{$data[$qk]}");
+                $this->query = $this->query->where($dk, "{$data[$qk]}");
             }
         }
         return $this;
@@ -143,7 +154,7 @@ class QueryHelper
                 list($dk, $qk) = explode($alias, $field);
             }
             if (isset($data[$qk]) && $data[$qk] !== '') {
-                $this->query->whereIn($dk, explode($split, $data[$qk]));
+                $this->query = $this->query->whereIn($dk, explode($split, $data[$qk]));
             }
         }
         return $this;
@@ -219,7 +230,7 @@ class QueryHelper
                     $after = call_user_func($callback, $after, 'after');
                     $begin = call_user_func($callback, $begin, 'begin');
                 }
-                $this->query->whereBetween($dk, [$begin, $after]);
+                $this->query = $this->query->whereBetween($dk, [$begin, $after]);
             }
         }
         return $this;
