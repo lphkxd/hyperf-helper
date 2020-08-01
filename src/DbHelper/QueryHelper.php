@@ -57,6 +57,26 @@ class QueryHelper
     }
 
     /**
+     * 追加数据
+     * @param $key
+     * @param null $value
+     * @return $this
+     */
+    public function addData($key, $value = null)
+    {
+        if (is_array($key)) {
+            $this->data = array_merge($this->data, $key);
+            return $this;
+        }
+        if ($value === null) {
+            unset($this->data[$key]);
+            return;
+        }
+        $this->data[$key] = $value;
+        return $this;
+    }
+
+    /**
      * 获取当前Db操作对象
      * @return Builder
      */
