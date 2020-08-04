@@ -14,35 +14,6 @@ class %CLASS%Service
        return %CLASS%Model::query()->create($data);
     }
 
-    public function update(array $data)
-    {
-
-    }
-
-    public function delete(int $id)
-    {
-        if ($id == 0) {
-            throw new ApiException('不能为空');
-        }
-        $detail = %CLASS%Model::query()->where('id', $id)->where('status', 1)->first();
-        if (empty($detail)) {
-            throw new ApiException('不存在');
-        }
-        return $detail->delete();
-    }
-
-    public function detail(int $id)
-    {
-        if ($id == 0) {
-            throw new ApiException('不能为空');
-        }
-        $detail = %CLASS%Model::query()->where('id', $id)->where('status', 1)->first();
-        if (empty($detail)) {
-            throw new ApiException('不存在');
-        }
-        return $detail->toArray();
-    }
-
     public function list(array $data)
     {
         $model = %CLASS%Model::query();

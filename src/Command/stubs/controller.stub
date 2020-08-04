@@ -7,19 +7,12 @@ use Mzh\Helper\Controller\AbstractBaseController;
 use Mzh\Swagger\Annotation\ApiController;
 use Hyperf\Di\Annotation\Inject;
 use Mzh\Swagger\Annotation\PostApi;
-use App\Service\%SERVICE%;
 
 /**
  * @ApiController(tag="%TITLE%", description="%DESC%")
  */
 class %CLASS% extends AbstractBaseController
 {
-    /**
-     * @Inject()
-     * @var %SERVICE%
-     */
-    private $%SERVICENAME%;
-
     /**
      * @PostApi(summary="默认index方法",security=true)
      */
