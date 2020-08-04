@@ -38,7 +38,7 @@ abstract class AbstractBaseController
     protected $response;
 
 
-    public function json($data = [], $msg = '')
+    protected function json($data = [], $msg = '')
     {
         $res = [];
         if (is_string($data)) {
