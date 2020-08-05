@@ -179,7 +179,7 @@ class QueryHelper
      * @param string $alias 别名分割符
      * @return $this
      */
-    public function dateBetween($fields, $split = ' - ', $alias = '#')
+    public function dateBetween($fields, $alias = '#', $split = ' - ')
     {
         return $this->setBetweenWhere($fields, $split, $alias, function ($value, $type) {
             if ($type === 'after') {
@@ -197,7 +197,7 @@ class QueryHelper
      * @param string $alias 别名分割符
      * @return $this
      */
-    public function timeBetween($fields, $split = ' - ', $alias = '#')
+    public function timeBetween($fields, $alias = '#', $split = ' - ')
     {
         return $this->setBetweenWhere($fields, $split, $alias, function ($value, $type) {
             if ($type === 'after') {
@@ -225,7 +225,11 @@ class QueryHelper
                 list($dk, $qk) = explode($alias, $field);
             }
             if (isset($data[$qk]) && $data[$qk] !== '') {
-                list($begin, $after) = explode($split, $data[$qk]);
+                if (is_array($data[$qk])){
+                    list($begin, $after) = $data[$qk];
+                }else{
+                    list($begin, $after) = explode($split, $data[$qk]);
+                }
                 if (is_callable($callback)) {
                     $after = call_user_func($callback, $after, 'after');
                     $begin = call_user_func($callback, $begin, 'begin');
