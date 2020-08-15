@@ -225,9 +225,9 @@ class QueryHelper
                 list($dk, $qk) = explode($alias, $field);
             }
             if (isset($data[$qk]) && $data[$qk] !== '') {
-                if (is_array($data[$qk])){
+                if (is_array($data[$qk])) {
                     list($begin, $after) = $data[$qk];
-                }else{
+                } else {
                     list($begin, $after) = explode($split, $data[$qk]);
                 }
                 if (is_callable($callback)) {
@@ -275,5 +275,20 @@ class QueryHelper
             'has_more' => $list->count() == ($limit ?? 20),
             'total_result' => $new->count(),
         ];
+    }
+
+    /**
+     * 获取所有结果
+     * @param string[] $columns
+     * @param null $callback
+     * @return mixed
+     */
+    public function get($columns = ['*'], $callback = null)
+    {
+        $list = $this->query->get($columns);
+        if (is_callable($callback)) {
+            $list = call_user_func($callback, $list);
+        }
+        return $list;
     }
 }
