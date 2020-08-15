@@ -169,33 +169,53 @@ if (!function_exists('session')) {
      */
     function session($name = '', $value = '', $sessionId = '')
     {
-        if ($sessionId != '') {
+        if ($sessionId != '' && $sessionId !== true) {
             $session = new Session(ApplicationContext::getContainer()->get(config('session.handler')), (string)$sessionId);
             $session->set($name, $value);
             Context::set(SessionInterface::class, $session);
             return true;
         }
-
         /** @var SessionInterface $session */
         $session = Context::get(SessionInterface::class);
-        if (empty($session)) {
-            return null;
+        switch (true) {
+            case empty($session):
+                return null;
+                break;
+            case is_null($name):
+                // 清除
+                $session->clear();
+                break;
+            case ('' === $name):
+                return $session->all();
+                break;
+            case is_null($value):
+                $session->remove($name);
+                break;
+            case '' === $value:
+                return 0 === strpos($name, '?') ? $session->has(substr($name, 1)) : $session->get($name);
+                break;
+            default:
+                $session->set($name, $value);
+                if ($sessionId === true) {
+                    $session->save();
+                }
+                break;
         }
-        if (is_null($name)) {
-            // 清除
-            $session->clear();
-        } elseif ('' === $name) {
-            return $session->all();
-        } elseif (is_null($value)) {
-            // 删除
-            $session->remove($name);
-        } elseif ('' === $value) {
-            // 判断或获取
-            return 0 === strpos($name, '?') ? $session->has(substr($name, 1)) : $session->get($name);
-        } else {
-            // 设置
-            $session->set($name, $value);
-        }
+    }
+}
+
+
+if (!function_exists('sessionSave')) {
+    /**
+     * Session管理
+     * @return mixed
+     */
+    function sessionSave(): SessionInterface
+    {
+        /** @var SessionInterface $session */
+        $session = Context::get(SessionInterface::class);
+        $session->save();
+        return $session;
     }
 }
 
