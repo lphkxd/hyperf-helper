@@ -255,6 +255,8 @@ class QueryHelper
         $db = $this->query->offset($offset)->limit($limit);
         if (isset($this->data['order_field'])) {
             $db->orderBy($this->data['order_field'], $this->data['order_type'] ?? 'desc');
+        }else{
+            $db = $db->latest();
         }
         $list = $db->get($columns);
         /** @var Collection|static[] $list */
@@ -285,6 +287,11 @@ class QueryHelper
      */
     public function get($columns = ['*'], $callback = null)
     {
+        if (isset($this->data['order_field'])) {
+            $this->query->orderBy($this->data['order_field'], $this->data['order_type'] ?? 'desc');
+        }else{
+           $this->query->latest();
+        }
         $list = $this->query->get($columns);
         if (is_callable($callback)) {
             $list = call_user_func($callback, $list);
