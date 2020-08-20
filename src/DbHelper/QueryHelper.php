@@ -90,7 +90,7 @@ class QueryHelper
      * @param string $alias 别名分割符
      * @return $this
      */
-    public function like($fields, $alias = '#')
+    public function like($fields, $alias = '#', $boolean = 'and')
     {
         $data = $this->data;
         foreach (is_array($fields) ? $fields : explode(',', $fields) as $field) {
@@ -99,7 +99,7 @@ class QueryHelper
                 list($dk, $qk) = explode($alias, $field);
             }
             if (isset($data[$qk]) && $data[$qk] !== '') {
-                $this->query = $this->query->where($dk, 'like', "%{$data[$qk]}%");
+                $this->query = $this->query->where($dk, 'like', "%{$data[$qk]}%", $boolean);
             }
         }
         return $this;
@@ -255,7 +255,7 @@ class QueryHelper
         $db = $this->query->offset($offset)->limit($limit);
         if (isset($this->data['order_field'])) {
             $db->orderBy($this->data['order_field'], $this->data['order_type'] ?? 'desc');
-        }else{
+        } else {
             $db = $db->latest();
         }
         $list = $db->get($columns);
@@ -289,8 +289,8 @@ class QueryHelper
     {
         if (isset($this->data['order_field'])) {
             $this->query->orderBy($this->data['order_field'], $this->data['order_type'] ?? 'desc');
-        }else{
-           $this->query->latest();
+        } else {
+            $this->query->latest();
         }
         $list = $this->query->get($columns);
         if (is_callable($callback)) {
